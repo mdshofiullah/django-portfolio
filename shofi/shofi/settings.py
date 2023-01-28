@@ -27,8 +27,7 @@ SECRET_KEY = 'django-insecure-7!##5#c_^l=m8@ghg#bca7bp593p2ioqo+&x!=7oeghbdfvisd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -149,8 +148,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "mdshofiullah65@gmail.com"
-EMAIL_HOST_PASSWORD = 'ppabehkkwgwyjjst'
+EMAIL_HOST_USER = "your email"
+EMAIL_HOST_PASSWORD = 'your password'
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
@@ -162,6 +161,4 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-
-# Configure Django App for Heroku.
 django_heroku.settings(locals())
