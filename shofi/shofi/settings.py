@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import django_heroku
 
 from pathlib import Path
 
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-7!##5#c_^l=m8@ghg#bca7bp593p2ioqo+&x!=7oeghbdfvisd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -160,3 +161,7 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
     },
 }
+
+
+# Configure Django App for Heroku.
+django_heroku.settings(locals())
