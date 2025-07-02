@@ -175,5 +175,13 @@ CKEDITOR_5_CONFIGS = {
         "language": "en"
     }
 }
-
+if os.environ.get('CREATE_SUPERUSER'):
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    if not User.objects.filter(username=os.environ['SUPERUSER_NAME']).exists():
+        User.objects.create_superuser(
+            os.environ['SUPERUSER_NAME'],
+            os.environ['SUPERUSER_EMAIL'],
+            os.environ['SUPERUSER_PASSWORD']
+        )
 # django_on_heroku.settings(locals())
