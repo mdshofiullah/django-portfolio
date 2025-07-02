@@ -1,9 +1,8 @@
 import dj_database_url
 from decouple import config
-import django_on_heroku
+# import django_on_heroku
 
 import os
-# import django_heroku
 
 from pathlib import Path
 
@@ -172,4 +171,4 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
-django_on_heroku.settings(locals())
+# django_on_heroku.settings(locals())
