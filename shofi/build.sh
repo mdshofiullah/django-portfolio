@@ -10,5 +10,3 @@ python manage.py collectstatic --noinput
 
 # Apply database migrations
 python manage.py migrate
-
-chmod +x build.sh
