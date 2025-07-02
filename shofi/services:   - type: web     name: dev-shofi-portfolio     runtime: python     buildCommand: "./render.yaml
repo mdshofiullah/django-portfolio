@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: dev-shofi-portfolio
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn shofi.wsgi:application"
+    rootDir: shofi
+    envVars:
+      - key: DEBUG
+        value: False
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: shofi-db
+          property: connectionString
+      - key: EMAIL_HOST_USER
+        value: alsait.shofiullah@gmail.com
+      - key: EMAIL_HOST_PASSWORD
+        value: ecga ezdk evih apea
+      - key: RENDER_EXTERNAL_HOSTNAME
+        value: ${service.name}.onrender.com
+
+databases:
+  - name: shofi-db
+    plan: free
