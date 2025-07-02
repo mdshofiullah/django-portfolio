@@ -1,6 +1,7 @@
 import dj_database_url
 from decouple import config
 # import django_on_heroku
+from django.core.management import call_command
 
 import os
 
@@ -175,13 +176,24 @@ CKEDITOR_5_CONFIGS = {
         "language": "en"
     }
 }
-if os.environ.get('CREATE_SUPERUSER'):
+
+# django_on_heroku.settings(locals())
+
+def create_superuser_if_needed():
     from django.contrib.auth import get_user_model
     User = get_user_model()
-    if not User.objects.filter(username=os.environ['SUPERUSER_NAME']).exists():
-        User.objects.create_superuser(
-            os.environ['SUPERUSER_NAME'],
-            os.environ['SUPERUSER_EMAIL'],
-            os.environ['SUPERUSER_PASSWORD']
-        )
-# django_on_heroku.settings(locals())
+    
+    if os.environ.get('CREATE_SUPERUSER', '').lower() == 'true':
+        try:
+            if not User.objects.filter(username=os.environ['SUPERUSER_NAME']).exists():
+                User.objects.create_superuser(
+                    os.environ['SUPERUSER_NAME'],
+                    os.environ['SUPERUSER_EMAIL'],
+                    os.environ['SUPERUSER_PASSWORD']
+                )
+                print(f"Superuser {os.environ['SUPERUSER_NAME']} created successfully")
+        except Exception as e:
+            print(f"Error creating superuser: {str(e)}")
+
+# Execute after all settings are loaded
+create_superuser_if_needed()
