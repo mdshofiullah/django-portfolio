@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+{% extends "base/master.html" %}
+{% comment %}
+<!-- <!DOCTYPE html>
 {% load static %}
 <html>
 <head>
@@ -12,22 +14,15 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 
 	<link rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}">
-	<link id="theme-style" rel="stylesheet" type="text/css" href="">
+	
+	<link id="theme-style" rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
-	<section class="s1">
+	<section class="s1" id="particles">
 		<div class="main-container">
-			<div class="greeting-wrapper">
-				<h1>Hi, I'm Md. Shofiullah</h1>
-			</div>
-
-
-			<div class="intro-wrapper">
-				{% include 'base/navbar.html' %}
-
-				<div class="left-column">
-					<img id="profile_pic" src="{% static 'images/s1.jpg' %}">
+			<div class="left-column pb-0">
 					<h5 style="text-align: center;line-height: 0;">Personalize Theme</h5>
 
 					<div id="theme-options-wrapper">
@@ -38,6 +33,17 @@
 					</div>
 
 					<p id="settings-note">*Theme settings will be saved for<br>your next vist</p>
+				</div>
+			<div class="right-column pt-0 pb-0"></div>
+			<div class="greeting-wrapper">
+				<h1>Hi, I'm Md. Shofiullah</h1>
+			</div>
+			<div id="">
+			<div class="intro-wrapper" id="">
+				{% include 'base/navbar.html' %}
+
+				<div class="left-column">
+					<img id="profile_pic" src="{% static 'images/s1.jpg' %}">
 				</div>
 
 				<div class="right-column">
@@ -54,6 +60,7 @@
 					</div>
 				</div>
 			</div>
+			</div>
 		</div>
 	</section>
 
@@ -68,8 +75,6 @@
 
 					<p>While I keep busy teaching courses, I still take interviews in search of a great team & projects that interest me.</p>
 
-
-					<hr>
 
 					<h4>TOP EXPERTISE</h4>
 
@@ -168,8 +173,289 @@
 	<script type="text/javascript">
 		let static = "{% static 'css' %}"
 	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
 	<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/animatedparticales.js' %}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 	
 </body>
-</html>
+</html> -->
+
+{% endcomment %}
+
+{% load static %}
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h4>CREATE YOUR SITE LIKE A PRO</h4>
+        <h1>Hi, I'm <span>Shofiullah</span>, Web Developer</h1>
+        <p>I build innovative web solutions that help businesses grow and succeed in the digital world. With expertise in modern technologies, I create seamless user experiences.</p>
+        <button class="btn">Get Started</button>
+    </div>
+    <div class="hero-image">
+        <img src="{% static 'images/developer.png' %}" alt="Developer Illustration">
+    </div>
+</section>
+
+<!-- Stats Section -->
+<div class="stats">
+    <div class="stat-item">
+        <div class="stat-number">+50</div>
+        <div class="stat-label">Happy Clients</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Years of Experience</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">Projects Completed</div>
+    </div>
+</div>
+
+<!-- Skills Section -->
+<section class="skills-section" id="skills">
+    <div class="skills-container">
+        <div class="skills-intro">
+            <h2>What My Programming Skills Included?</h2>
+            <p>I develop simple, intuitive and responsive user interfaces that help users get things done with less effort and time using these technologies.</p>
+        </div>
+        <div class="skills-grid">
+            {% for skill in skills %}
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="{{ skill.icon }}"></i>
+                </div>
+                <h3>{{ skill.name }}</h3>
+                <p>{{ skill.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pricing" id="pricing">
+    <div class="section-header">
+        <h2>Project Pricing Plans</h2>
+        <p>Choose the perfect plan for your project needs and budget requirements.</p>
+    </div>
+    <div class="pricing-grid">
+        {% for plan in pricing_plans %}
+        <div class="pricing-card {% if plan.popular %}popular{% endif %}">
+            <div class="popular-badge">{{ plan.badge }}</div>
+            <div class="content">
+                <h3>{{ plan.name }}</h3>
+                <div class="price">${{ plan.price }}</div>
+                <ul>
+                    {% for feature in plan.features.all %}
+                    <li>
+                        {% if feature.included %}
+                        <i class="fas fa-check"></i>
+                        {% else %}
+                        <i class="fas fa-times"></i>
+                        {% endif %}
+                        {{ feature.name }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <button class="btn">Choose Plan</button>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section class="projects" id="projects">
+    <div class="section-header">
+        <h2>Recent Projects</h2>
+        <p>Explore my latest work and see how I solve complex problems with elegant solutions.</p>
+    </div>
+    <div class="projects-grid">
+        {% for project in projects %}
+        <div class="project-card">
+            <div class="project-image">
+                <img src="{{ project.thumbnail.url }}" alt="{{ project.headline }}">
+            </div>
+            <div class="project-content">
+                <h3>{{ project.headline }}</h3>
+                <p>{{ project.sub_headline }}</p>
+                <a href="{% url 'post' project.slug %}" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{% url 'posts' %}" class="btn">View All Projects</a>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials" id="testimonials">
+    <div class="section-header">
+        <h2>Client Testimonials</h2>
+        <p>What my clients say about working with me.</p>
+    </div>
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            {% for testimonial in testimonials %}
+            <div class="swiper-slide">
+                <div class="testimonial-card">
+                    <p class="testimonial-content">{{ testimonial.content }}</p>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="{{ testimonial.client.photo.url }}" alt="{{ testimonial.client.name }}">
+                        </div>
+                        <div class="author-info">
+                            <h4>{{ testimonial.client.name }}</h4>
+                            <p>{{ testimonial.client.position }}, {{ testimonial.client.company }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact" id="contact">
+    <div class="section-header">
+        <h2>Get In Touch</h2>
+        <p>Have a project in mind? Let's discuss how I can help bring your vision to life.</p>
+    </div>
+    <div class="contact-container">
+        <div class="contact-info">
+            <div class="contact-card">
+                <h3>Contact Information</h3>
+                <div class="contact-detail">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Location</h4>
+                        <p>{{ contact_info.location }}</p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Email</h4>
+                        <p>{{ contact_info.email }}</p>
+                    </div>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Phone</h4>
+                        <p>{{ contact_info.phone }}</p>
+                    </div>
+                </div>
+                
+                <div class="social-links">
+                    {% for social in social_links %}
+                    <a href="{{ social.url }}" class="social-link">
+                        <i class="{{ social.icon }}"></i>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-form">
+            <form method="POST" action="{% url 'send_email' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" class="form-control" placeholder="Enter subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" name="message" class="form-control" placeholder="Enter your message" required></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+    <div class="cta-content">
+        <h2>Let's Start a Project Now</h2>
+        <p>Interested in working together? We should queue up a chat. I'll buy the coffee!</p>
+        <div class="cta-buttons">
+            <a href="#contact" class="btn btn-white">Start a Project</a>
+            <a href="#contact" class="btn btn-transparent">Schedule a Call</a>
+        </div>
+    </div>
+</section>
+
+<!-- Coffee Section -->
+<section class="coffee">
+    <div class="coffee-content">
+        <div class="coffee-icon">
+            <i class="fas fa-mug-hot"></i>
+        </div>
+        <h3>Enjoyed my work? Buy me a coffee!</h3>
+        <p>If you appreciate my portfolio and would like to support my work, consider buying me a coffee. Your support helps me continue creating great content and projects.</p>
+        <a href="{{ donation_link }}" class="btn coffee-btn">
+            <i class="fas fa-coffee"></i> Buy Me a Coffee
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Shofi Dev</h3>
+            <p>Creating innovative web solutions that help businesses grow and succeed in the digital world.</p>
+        </div>
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Services</h3>
+            <ul class="footer-links">
+                {% for service in services %}
+                <li><a href="#">{{ service.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Info</h3>
+            <ul class="footer-links">
+                <li><i class="fas fa-map-marker-alt"></i> {{ contact_info.location }}</li>
+                <li><i class="fas fa-phone"></i> {{ contact_info.phone }}</li>
+                <li><i class="fas fa-envelope"></i> {{ contact_info.email }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyright">
+        <p>&copy; {% now "Y" %} Shofi Dev. All Rights Reserved.</p>
+    </div>
+</footer>
+{% endblock %}

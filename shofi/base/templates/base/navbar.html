@@ -1,20 +1,17 @@
-<div class="nav-wrapper">
-
-    <!-- Link around dots-wrapper added after tutorial video -->
-    <a href="{% url 'home' %}">
-        <div class="dots-wrapper">
-            <div id="dot-1" class="browser-dot"></div>
-            <div id="dot-2" class="browser-dot"></div>
-            <div id="dot-3" class="browser-dot"></div>
-        </div>
-    </a>
-    
-
-    <ul id="navigation">
-        <li><a href="{% url 'home' %}#contact">Contact</a></li>
-        {% if request.user.is_authenticated %}
-        <li><a href="{% url 'create_post' %}">Create Post</a></li>
-        {% endif %}
-
-    </ul>
-</div>
+<nav>
+    <div class="nav-logo">
+        <span>Shofi</span><span>Dev</span>
+    </div>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+    </div>
+    <button class="btn hire-me-nav">Hire Me</button>
+    <button class="hamburger">
+        <i class="fas fa-bars"></i>
+    </button>
+</nav>

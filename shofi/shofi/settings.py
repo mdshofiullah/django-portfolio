@@ -12,8 +12,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-DEBUG = config('DEBUG', default=False, cast=bool)
-SECRET_KEY = config('SECRET_KEY')
+# DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True  # Set to False in production
+SECRET_KEY = "django-insecure-@!#&*^%$#@!%&*()_+{}:<>?[];'\"\\,./`~"
+# SECRET_KEY = config('SECRET_KEY')
 
 # ALLOWED_HOSTS = ['*']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -147,8 +149,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 CKEDITOR_5_UPLOAD_PATH = "uploads/"
 
@@ -179,21 +181,21 @@ CKEDITOR_5_CONFIGS = {
 
 # django_on_heroku.settings(locals())
 
-def create_superuser_if_needed():
-    from django.contrib.auth import get_user_model
-    User = get_user_model()
+# def create_superuser_if_needed():
+#     from django.contrib.auth import get_user_model
+#     User = get_user_model()
     
-    if os.environ.get('CREATE_SUPERUSER', '').lower() == 'true':
-        try:
-            if not User.objects.filter(username=os.environ['SUPERUSER_NAME']).exists():
-                User.objects.create_superuser(
-                    os.environ['SUPERUSER_NAME'],
-                    os.environ['SUPERUSER_EMAIL'],
-                    os.environ['SUPERUSER_PASSWORD']
-                )
-                print(f"Superuser {os.environ['SUPERUSER_NAME']} created successfully")
-        except Exception as e:
-            print(f"Error creating superuser: {str(e)}")
+#     if os.environ.get('CREATE_SUPERUSER', '').lower() == 'true':
+#         try:
+#             if not User.objects.filter(username=os.environ['SUPERUSER_NAME']).exists():
+#                 User.objects.create_superuser(
+#                     os.environ['SUPERUSER_NAME'],
+#                     os.environ['SUPERUSER_EMAIL'],
+#                     os.environ['SUPERUSER_PASSWORD']
+#                 )
+#                 print(f"Superuser {os.environ['SUPERUSER_NAME']} created successfully")
+#         except Exception as e:
+#             print(f"Error creating superuser: {str(e)}")
 
-# Execute after all settings are loaded
-create_superuser_if_needed()
+# # Execute after all settings are loaded
+# create_superuser_if_needed()

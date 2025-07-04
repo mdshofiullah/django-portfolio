@@ -1,6 +1,7 @@
 :root{
 	--mainColor:#eaeaea;
 	--secondaryColor:#fff;
+	--mainColorDark:#b0b0b0;
 
 	--borderColor:#c1c1c1;
 
@@ -59,9 +60,10 @@ h6 { font-size: 16px;}
 
 
 .s1{
-	background-color: var(--mainColor);
+	background-color: var(--mainColorDark);
 	border-bottom:1px solid var(--borderColor);
 	overflow:auto;
+	/* height: 100vh; */
 }
 
 .s2{

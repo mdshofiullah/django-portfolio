@@ -7,13 +7,34 @@ from django.template.loader import render_to_string
 
 from .forms import PostForm
 from .filters import PostFilter
-from .models import Post
+from .models import Post, Skill, PricingPlan, Testimonial, ContactInfo, SocialLink, Service
 
+
+# def home(request):
+#     posts = Post.objects.filter(activate=True, featured=True).order_by('-created')[:3]
+#     return render(request, 'base/index.html', {'posts': posts})
 
 def home(request):
     posts = Post.objects.filter(activate=True, featured=True).order_by('-created')[:3]
-    return render(request, 'base/index.html', {'posts': posts})
-
+    skills = Skill.objects.all()
+    pricing_plans = PricingPlan.objects.all()
+    testimonials = Testimonial.objects.all()
+    contact_info = ContactInfo.objects.first()
+    social_links = SocialLink.objects.all()
+    services = Service.objects.all()
+    
+    context = {
+        'posts': posts,
+        'skills': skills,
+        'pricing_plans': pricing_plans,
+        'projects': Post.objects.filter(activate=True).order_by('-created')[:3],  # Use Post as projects
+        'testimonials': testimonials,
+        'contact_info': contact_info,
+        'social_links': social_links,
+        'services': services,
+        'donation_link': "https://buymeacoffee.com/shofiullah",
+    }
+    return render(request, 'base/index.html', context)
 
 def posts(request):
     post_list = Post.objects.filter(activate=True).order_by('-created')  # ✅ ordering added

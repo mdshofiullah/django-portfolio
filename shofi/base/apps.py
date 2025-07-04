@@ -6,4 +6,4 @@ class BaseConfig(AppConfig):
     name = 'base'
     def ready(self):
         # Import signals when the app is ready
-        import your_app.signals
+        import base.signals

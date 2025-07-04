@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+{% comment %}
+<!-- <!DOCTYPE html>
 {% load static %}
 <html lang="en">
 <head>
@@ -30,5 +31,70 @@
 	<script type="text/javascript" src="{% static '/js/bootstrap.min.js' %}"></script>
 	
     
+</body>
+</html> -->
+
+{% endcomment %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shofi Portfolio</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" type="text/css" href="">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- Theme Switcher Toggle -->
+    <div class="theme-toggle">
+        <i class="fas fa-palette"></i>
+    </div>
+    
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <div class="theme-dot" id="light-dot" data-theme="light">
+            <span class="theme-label">Light Theme</span>
+        </div>
+        <div class="theme-dot" id="blue-dot" data-theme="blue">
+            <span class="theme-label">Blue Theme</span>
+        </div>
+        <div class="theme-dot" id="green-dot" data-theme="green">
+            <span class="theme-label">Green Theme</span>
+        </div>
+        <div class="theme-dot" id="purple-dot" data-theme="purple">
+            <span class="theme-label">Purple Theme</span>
+        </div>
+    </div>
+    
+    <!-- Floating Hire Me Button for Mobile -->
+    <a href="#contact" class="floating-hire-btn">Hire Me</a>
+    
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    {% include 'base/navbar.html' %}
+    {% block content %}
+    {% endblock %}
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
