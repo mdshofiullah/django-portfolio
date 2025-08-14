@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shofi Dev | Portfolio</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+      /* ===== CSS Variables ===== */
+      :root {
+        --primary: #ffffff;
+        --secondary: #000000;
+        --accent: #cccccc;
+        --text: #aaaaaa;
+        --text-light: #777777;
+        --background: #121212;
+        --card-bg: #1a1a1a;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        --transition: all 0.3s ease;
+        --border: 1px solid rgba(255, 255, 255, 0.08);
+        --section-padding: 100px 5%;
+      }
+
+      .light-theme {
+        --primary: #000000;
+        --secondary: #ffffff;
+        --accent: #333333;
+        --text: #666666;
+        --text-light: #999999;
+        --background: #f0f0f0;
+        --card-bg: #ffffff;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        --border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      /* ===== Global Styles ===== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        transition: var(--transition);
+      }
+
+      body {
+        background-color: var(--background);
+        color: var(--text);
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+
+      #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .section-padding {
+        padding: var(--section-padding);
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: var(--primary);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      p {
+        line-height: 1.6;
+        margin-bottom: 15px;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--primary);
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* ===== Buttons ===== */
+      .btn {
+        display: inline-block;
+        background: var(--primary);
+        color: var(--secondary);
+        border: none;
+        padding: 12px 28px;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-outline {
+        background: transparent;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        box-shadow: none;
+      }
+
+      .btn-outline:hover {
+        background: var(--primary);
+        color: var(--secondary);
+      }
+
+      /* ===== Theme Switcher ===== */
+      .theme-switcher {
+        position: fixed;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 100;
+        background: var(--card-bg);
+        border-radius: 30px;
+        padding: 15px 10px;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .theme-dot {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid var(--text-light);
+        transition: var(--transition);
+      }
+
+      .theme-dot:hover {
+        transform: scale(1.1);
+      }
+
+      #dark-dot {
+        background: linear-gradient(135deg, #121212, #333333);
+      }
+
+      #light-dot {
+        background: linear-gradient(135deg, #f8fafc, #cbd5e1);
+      }
+
+      .theme-label {
+        position: absolute;
+        left: 45px;
+        background: var(--card-bg);
+        padding: 5px 15px;
+        border-radius: 30px;
+        font-weight: 600;
+        color: var(--primary);
+        opacity: 0;
+        pointer-events: none;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        white-space: nowrap;
+      }
+
+      .theme-dot:hover + .theme-label {
+        opacity: 1;
+        left: 50px;
+      }
+
+      /* Mobile Theme Switcher */
+      .mobile-theme-switcher {
+        display: none;
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        z-index: 100;
+        background: var(--card-bg);
+        border-radius: 30px;
+        padding: 10px;
+        box-shadow: var(--shadow);
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* ===== Navigation ===== */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5%;
+        background: var(--card-bg);
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      .nav-logo {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .nav-logo span {
+        color: var(--accent);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 600;
+        position: relative;
+        padding: 5px 0;
+      }
+
+      .nav-links a:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--primary);
+        transition: var(--transition);
+      }
+
+      .nav-links a:hover:after {
+        width: 100%;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      .nav-hire-btn {
+        display: block;
+      }
+
+      /* Mobile Menu */
+      .mobile-menu-btn {
+        display: none;
+        background: transparent;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--primary);
+        z-index: 1001;
+      }
+
+      .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 300px;
+        height: 100vh;
+        background: var(--card-bg);
+        box-shadow: var(--shadow);
+        z-index: 1000;
+        transition: right 0.3s ease;
+        padding: 80px 30px 30px;
+      }
+
+      .mobile-menu.active {
+        right: 0;
+      }
+
+      .mobile-menu-links {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .mobile-menu-links a {
+        color: var(--primary);
+        font-size: 18px;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* ===== Hero Section ===== */
+      .hero {
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+        padding: var(--section-padding);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-content {
+        flex: 1;
+        max-width: 600px;
+        padding: 40px 0;
+      }
+
+      .hero h4 {
+        color: var(--primary);
+        font-size: 18px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+      }
+
+      .hero h1 span {
+        position: relative;
+      }
+
+      .hero h1 span:after {
+        content: "";
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        width: 100%;
+        height: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        z-index: -1;
+      }
+
+      .hero p {
+        font-size: 18px;
+        margin-bottom: 30px;
+        color: var(--text);
+      }
+
+      .hero-image {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        animation: float 4s ease-in-out infinite;
+      }
+
+      .hero-image img {
+        max-width: 100%;
+        max-height: 600px;
+        border-radius: 20px;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      /* ===== Section Header ===== */
+      .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .section-header h2 {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+      }
+
+      .section-header p {
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 18px;
+        color: var(--text);
+      }
+
+      /* ===== Projects Section ===== */
+      .projects {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .project-card {
+        background: var(--card-bg);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        border: var(--border);
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .project-image {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .project-card:hover .project-image img {
+        transform: scale(1.05);
+      }
+
+      .project-content {
+        padding: 25px;
+      }
+
+      .project-content h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .project-content p {
+        color: var(--text);
+        margin-bottom: 15px;
+        font-size: 0.95rem;
+      }
+
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 15px;
+      }
+
+      .project-tag {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text);
+        padding: 5px 12px;
+        border-radius: 30px;
+        font-size: 0.85rem;
+      }
+
+      /* ===== Features/Services Section ===== */
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .feature-card {
+        background: var(--card-bg);
+        border-radius: 15px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        border: var(--border);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        font-size: 30px;
+        color: var(--primary);
+      }
+
+      .feature-card h3 {
+        font-size: 22px;
+        margin-bottom: 15px;
+      }
+
+      .feature-card p {
+        margin-bottom: 20px;
+        color: var(--text);
+      }
+
+      .feature-card a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .feature-card a:hover {
+        gap: 10px;
+      }
+
+      /* ===== Coffee Section ===== */
+      .coffee-section {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 60px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        max-width: 800px;
+        margin: 0 auto;
+        border: var(--border);
+      }
+
+      .coffee-content {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .coffee-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: var(--primary);
+      }
+
+      .coffee-content h2 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+      }
+
+      .coffee-content p {
+        color: var(--text);
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      .coffee-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--primary);
+        color: var(--secondary);
+        padding: 15px 35px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .coffee-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      /* ===== CTA Section ===== */
+      .cta-section {
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.05)
+          ),
+          url("https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1200&q=80");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        text-align: center;
+        padding: 100px 20px;
+        border-radius: 20px;
+        margin: 50px 0;
+      }
+
+      .cta-content {
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .cta-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: white;
+      }
+
+      .cta-content p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .cta-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .cta-btn {
+        background: white;
+        color: black;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .cta-btn.outline {
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+      }
+
+      .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      /* ===== Newsletter Section ===== */
+      .newsletter-section {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 60px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        max-width: 800px;
+        margin: 0 auto 50px;
+        border: var(--border);
+      }
+
+      .newsletter-content {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .newsletter-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: var(--primary);
+      }
+
+      .newsletter-content h2 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+      }
+
+      .newsletter-content p {
+        color: var(--text);
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      .newsletter-form {
+        display: flex;
+        max-width: 500px;
+        margin: 0 auto;
+        gap: 10px;
+      }
+
+      .newsletter-input {
+        flex: 1;
+        padding: 15px 20px;
+        border: var(--border);
+        border-radius: 30px;
+        background: var(--background);
+        font-size: 16px;
+        color: var(--text);
+      }
+
+      .newsletter-input:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .newsletter-btn {
+        background: var(--primary);
+        color: var(--secondary);
+        border: none;
+        padding: 0 30px;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .newsletter-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* ===== About Section ===== */
+      .about-content {
+        display: flex;
+        gap: 50px;
+        align-items: center;
+      }
+
+      .about-text {
+        flex: 1;
+      }
+
+      .about-text h3 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+
+      .about-text p {
+        margin-bottom: 20px;
+        line-height: 1.8;
+        color: var(--text);
+      }
+
+      .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 30px;
+      }
+
+      .skill-tag {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text);
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .about-image {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+      }
+
+      .about-image img {
+        max-width: 100%;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      /* ===== Contact Section ===== */
+      .contact-container {
+        display: flex;
+        gap: 50px;
+      }
+
+      .contact-info {
+        flex: 1;
+      }
+
+      .contact-card {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: var(--shadow);
+        margin-bottom: 30px;
+        border: var(--border);
+      }
+
+      .contact-card h3 {
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
+
+      .contact-detail {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .contact-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: var(--primary);
+      }
+
+      .contact-text h4 {
+        margin-bottom: 5px;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+      }
+
+      .social-link {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: var(--secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: var(--transition);
+      }
+
+      .social-link:hover {
+        transform: translateY(-5px);
+      }
+
+      .contact-form {
+        flex: 1;
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: var(--shadow);
+        border: var(--border);
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 15px;
+        border: var(--border);
+        border-radius: 10px;
+        background: var(--background);
+        color: var(--text);
+        font-size: 16px;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      /* ===== Footer ===== */
+      footer {
+        background: var(--card-bg);
+        color: var(--text);
+        padding: 70px 5% 30px;
+        border-top: var(--border);
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-bottom: 50px;
+      }
+
+      .footer-column h3 {
+        margin-bottom: 25px;
+        font-size: 1.5rem;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 15px;
+      }
+
+      .footer-links a {
+        color: var(--text);
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+        padding-left: 5px;
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 30px;
+        border-top: var(--border);
+        color: var(--text);
+      }
+
+      /* ===== Floating Buttons ===== */
+      .floating-buttons {
+        position: fixed;
+        right: 30px;
+        bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        z-index: 99;
+      }
+
+      .scroll-top-btn,
+      .hire-btn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: var(--secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        transition: var(--transition);
+        border: none;
+      }
+
+      .scroll-top-btn:hover,
+      .hire-btn:hover {
+        transform: translateY(-5px);
+      }
+
+      .scroll-top-btn {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .scroll-top-btn.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* ===== Responsive Design ===== */
+      @media (max-width: 992px) {
+        .hero {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .hero-content {
+          margin-bottom: 50px;
+        }
+
+        .hero h1 span:after {
+          left: 50%;
+          transform: translateX(-50%);
+          width: 80%;
+        }
+
+        .about-content {
+          flex-direction: column;
+        }
+
+        .contact-container {
+          flex-direction: column;
+        }
+
+        .section-header h2 {
+          font-size: 2.2rem;
+        }
+
+        .theme-switcher {
+          display: none;
+        }
+
+        .mobile-theme-switcher {
+          display: flex;
+        }
+
+        .nav-hire-btn {
+          display: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .theme-switcher {
+          display: none;
+        }
+
+        .mobile-theme-switcher {
+          display: flex;
+        }
+
+        .coffee-section,
+        .newsletter-section {
+          padding: 40px 20px;
+        }
+
+        .section-header h2 {
+          font-size: 2rem;
+        }
+
+        .floating-buttons {
+          right: 15px;
+          bottom: 15px;
+        }
+
+        .scroll-top-btn,
+        .hire-btn {
+          width: 45px;
+          height: 45px;
+          font-size: 18px;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .newsletter-form {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .hero p {
+          font-size: 16px;
+        }
+
+        .section-header h2 {
+          font-size: 1.8rem;
+        }
+
+        .section-header p {
+          font-size: 16px;
+        }
+
+        .feature-card,
+        .project-card {
+          padding: 25px 20px;
+        }
+
+        .mobile-menu {
+          width: 100%;
+          right: -100%;
+        }
+
+        .mobile-theme-switcher {
+          bottom: 150px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mobile Theme Switcher -->
+    <div class="mobile-theme-switcher">
+      <div class="theme-dot" id="mobile-dark-dot" data-theme="dark"></div>
+      <div class="theme-dot" id="mobile-light-dot" data-theme="light"></div>
+    </div>
+
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-logo"><span>Shofi</span><span>Dev</span></div>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="btn nav-hire-btn">Hire Me</button>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-links">
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#coffee">Buy Me Coffee</a>
+        <a href="#newsletter">Newsletter</a>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <h4>CREATE YOUR SITE LIKE A PRO</h4>
+          <h1>Hi, I'm <span>Shofi</span>, Web Developer</h1>
+          <p>
+            I build innovative web solutions that help businesses grow and
+            succeed in the digital world. With expertise in modern technologies,
+            I create seamless user experiences.
+          </p>
+          <button class="btn">Get Started</button>
+        </div>
+        <div class="hero-image">
+          <img
+            src="https://images.unsplash.com/photo-1579403124614-197f69d8187b?auto=format&fit=crop&w=500&h=600&q=80"
+            alt="Developer Illustration"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section-padding" id="projects">
+      <div class="container">
+        <div class="section-header">
+          <h2>Recent Projects</h2>
+          <p>Explore my latest work and creative solutions.</p>
+        </div>
+        <div class="projects">
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&h=300&q=80"
+                alt="Project 1"
+              />
+            </div>
+            <div class="project-content">
+              <h3>E-Commerce Platform</h3>
+              <p>
+                A modern e-commerce solution with seamless user experience and
+                secure payment integration.
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">React</span>
+                <span class="project-tag">Node.js</span>
+                <span class="project-tag">MongoDB</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=600&h=300&q=80"
+                alt="Project 2"
+              />
+            </div>
+            <div class="project-content">
+              <h3>Finance Dashboard</h3>
+              <p>
+                Data visualization platform for financial analytics with
+                real-time updates.
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">Vue.js</span>
+                <span class="project-tag">D3.js</span>
+                <span class="project-tag">Firebase</span>
+              </div>
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-image">
+              <img
+                src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=600&h=300&q=80"
+                alt="Project 3"
+              />
+            </div>
+            <div class="project-content">
+              <h3>Travel Blog Platform</h3>
+              <p>
+                Content management system for travel bloggers with interactive
+                maps and galleries.
+              </p>
+              <div class="project-tags">
+                <span class="project-tag">WordPress</span>
+                <span class="project-tag">PHP</span>
+                <span class="project-tag">JavaScript</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section-padding" id="services">
+      <div class="container">
+        <div class="section-header">
+          <h2>My Services</h2>
+          <p>Discover how I can help your business grow and succeed online.</p>
+        </div>
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <h3>Web Development</h3>
+            <p>
+              Custom website development with modern frameworks and responsive
+              design.
+            </p>
+            <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Mobile Apps</h3>
+            <p>
+              Native and cross-platform mobile applications with seamless UX.
+            </p>
+            <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-paint-brush"></i>
+            </div>
+            <h3>UI/UX Design</h3>
+            <p>
+              User-centered design solutions that enhance engagement and
+              conversion.
+            </p>
+            <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>SEO Optimization</h3>
+            <p>
+              Improve your search rankings and drive organic traffic to your
+              website.
+            </p>
+            <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coffee Section -->
+    <section class="section-padding" id="coffee">
+      <div class="container">
+        <div class="coffee-section">
+          <div class="coffee-content">
+            <div class="coffee-icon">
+              <i class="fas fa-mug-hot"></i>
+            </div>
+            <h2>Enjoying My Work?</h2>
+            <p>
+              If you appreciate my projects and would like to support my work,
+              consider buying me a coffee. Your support helps me create more
+              amazing content and open-source projects.
+            </p>
+            <a href="#" class="coffee-btn">
+              <i class="fas fa-coffee"></i> Buy Me a Coffee
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section-padding" id="cta">
+      <div class="container">
+        <div class="cta-section">
+          <div class="cta-content">
+            <h2>Ready to Bring Your Project to Life?</h2>
+            <p>
+              Let's collaborate to create something amazing together. Schedule a
+              call to discuss your project requirements and how I can help.
+            </p>
+            <div class="cta-buttons">
+              <button class="cta-btn">Hire Me Now</button>
+              <button class="cta-btn outline">Schedule a Call</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section-padding" id="about">
+      <div class="container">
+        <div class="section-header">
+          <h2>About Me</h2>
+          <p>
+            Learn more about my skills, experience, and professional journey.
+          </p>
+        </div>
+        <div class="about-content">
+          <div class="about-text">
+            <h3>Full Stack Developer with 5+ Years Experience</h3>
+            <p>
+              I'm a passionate web developer specializing in creating modern,
+              responsive websites and applications. With expertise in both
+              front-end and back-end technologies, I deliver comprehensive
+              solutions that meet business objectives.
+            </p>
+            <p>
+              My approach combines technical excellence with creative
+              problem-solving. I stay updated with the latest industry trends to
+              ensure my clients receive cutting-edge solutions.
+            </p>
+
+            <h4 style="margin-top: 30px; margin-bottom: 15px">
+              Skills & Expertise
+            </h4>
+            <div class="skills">
+              <div class="skill-tag">JavaScript</div>
+              <div class="skill-tag">React</div>
+              <div class="skill-tag">Node.js</div>
+              <div class="skill-tag">Python</div>
+              <div class="skill-tag">Django</div>
+              <div class="skill-tag">UI/UX Design</div>
+              <div class="skill-tag">SEO</div>
+              <div class="skill-tag">Responsive Design</div>
+            </div>
+
+            <button class="btn" style="margin-top: 30px">Download CV</button>
+          </div>
+          <div class="about-image">
+            <img
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&h=600&q=80"
+              alt="About Me"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="section-padding" id="newsletter">
+      <div class="container">
+        <div class="newsletter-section">
+          <div class="newsletter-content">
+            <div class="newsletter-icon">
+              <i class="fas fa-envelope-open-text"></i>
+            </div>
+            <h2>Stay Updated</h2>
+            <p>
+              Subscribe to my newsletter to receive updates on new projects,
+              tutorials, and web development insights.
+            </p>
+            <form class="newsletter-form">
+              <input
+                type="email"
+                class="newsletter-input"
+                placeholder="Your email address"
+              />
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section-padding" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <h2>Get In Touch</h2>
+          <p>
+            Have a project in mind? Let's discuss how I can help bring your
+            vision to life.
+          </p>
+        </div>
+        <div class="contact-container">
+          <div class="contact-info">
+            <div class="contact-card">
+              <h3>Contact Information</h3>
+              <div class="contact-detail">
+                <div class="contact-icon">
+                  <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="contact-text">
+                  <h4>Location</h4>
+                  <p>Dhaka, Bangladesh</p>
+                </div>
+              </div>
+              <div class="contact-detail">
+                <div class="contact-icon">
+                  <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-text">
+                  <h4>Email</h4>
+                  <p>contact@shofi.dev</p>
+                </div>
+              </div>
+              <div class="contact-detail">
+                <div class="contact-icon">
+                  <i class="fas fa-phone"></i>
+                </div>
+                <div class="contact-text">
+                  <h4>Phone</h4>
+                  <p>+880 123 456 789</p>
+                </div>
+              </div>
+
+              <div class="social-links">
+                <a href="#" class="social-link"
+                  ><i class="fab fa-github"></i
+                ></a>
+                <a href="#" class="social-link"
+                  ><i class="fab fa-linkedin"></i
+                ></a>
+                <a href="#" class="social-link"
+                  ><i class="fab fa-twitter"></i
+                ></a>
+                <a href="#" class="social-link"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <h3>Working Hours</h3>
+              <div class="contact-detail">
+                <div class="contact-icon">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="contact-text">
+                  <h4>Monday - Friday</h4>
+                  <p>9:00 AM - 6:00 PM</p>
+                </div>
+              </div>
+              <div class="contact-detail">
+                <div class="contact-icon">
+                  <i class="fas fa-clock"></i>
+                </div>
+                <div class="contact-text">
+                  <h4>Saturday - Sunday</h4>
+                  <p>By Appointment Only</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form">
+            <h3>Send Me a Message</h3>
+            <form>
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  placeholder="Enter your name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  placeholder="Enter your email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input
+                  type="text"
+                  id="subject"
+                  class="form-control"
+                  placeholder="Enter subject"
+                />
+              </div>
+              <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea
+                  id="message"
+                  class="form-control"
+                  placeholder="Enter your message"
+                ></textarea>
+              </div>
+              <button type="submit" class="btn" style="width: 100%">
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>Shofi Dev</h3>
+            <p>
+              Creating innovative web solutions that help businesses grow and
+              succeed in the digital world.
+            </p>
+          </div>
+          <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Services</h3>
+            <ul class="footer-links">
+              <li><a href="#">Web Development</a></li>
+              <li><a href="#">UI/UX Design</a></li>
+              <li><a href="#">E-commerce Solutions</a></li>
+              <li><a href="#">SEO Optimization</a></li>
+              <li><a href="#">App Development</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Contact Info</h3>
+            <ul class="footer-links">
+              <li><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</li>
+              <li><i class="fas fa-phone"></i> +880 123 456 789</li>
+              <li><i class="fas fa-envelope"></i> contact@shofi.dev</li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>&copy; 2023 Shofi Dev. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+      <button class="scroll-top-btn" id="scrollTopBtn">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="hire-btn" id="hireBtn">
+        <i class="fas fa-comment"></i>
+      </button>
+    </div>
+
+    <script>
+      // Initialize Particles.js with monochrome settings
+      document.addEventListener("DOMContentLoaded", function () {
+        // Set default to dark theme
+        document.documentElement.className = "dark-theme";
+
+        const particleColor = "#ffffff";
+
+        particlesJS("particles-js", {
+          particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: particleColor },
+            shape: { type: "circle" },
+            opacity: { value: 0.1, random: false },
+            size: { value: 3, random: true },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: particleColor,
+              opacity: 0.1,
+              width: 1,
+            },
+            move: {
+              enable: true,
+              speed: 2,
+              direction: "none",
+              random: false,
+              straight: false,
+              out_mode: "out",
+              bounce: false,
+            },
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: { enable: true, mode: "grab" },
+              onclick: { enable: true, mode: "push" },
+              resize: true,
+            },
+            modes: {
+              grab: { distance: 140, line_linked: { opacity: 0.2 } },
+              push: { particles_nb: 4 },
+            },
+          },
+          retina_detect: true,
+        });
+
+        // Theme Switching
+        const themeDots = document.querySelectorAll(
+          ".theme-dot, .mobile-theme-switcher .theme-dot"
+        );
+
+        themeDots.forEach((dot) => {
+          dot.addEventListener("click", function () {
+            const theme = this.dataset.theme;
+            document.documentElement.className = theme + "-theme";
+
+            // Update particles color based on theme
+            const particleColor = theme === "dark" ? "#ffffff" : "#000000";
+            particlesJS("particles-js", {
+              particles: {
+                number: {
+                  value: 80,
+                  density: { enable: true, value_area: 800 },
+                },
+                color: { value: particleColor },
+                shape: { type: "circle" },
+                opacity: { value: 0.1, random: false },
+                size: { value: 3, random: true },
+                line_linked: {
+                  enable: true,
+                  distance: 150,
+                  color: particleColor,
+                  opacity: 0.1,
+                  width: 1,
+                },
+                move: {
+                  enable: true,
+                  speed: 2,
+                  direction: "none",
+                  random: false,
+                  straight: false,
+                  out_mode: "out",
+                  bounce: false,
+                },
+              },
+              interactivity: {
+                detect_on: "canvas",
+                events: {
+                  onhover: { enable: true, mode: "grab" },
+                  onclick: { enable: true, mode: "push" },
+                  resize: true,
+                },
+                modes: {
+                  grab: { distance: 140, line_linked: { opacity: 0.2 } },
+                  push: { particles_nb: 4 },
+                },
+              },
+              retina_detect: true,
+            });
+
+            // Save theme to localStorage
+            localStorage.setItem("theme", theme);
+          });
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          document.documentElement.className = savedTheme + "-theme";
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+              target.scrollIntoView({
+                behavior: "smooth",
+              });
+            }
+
+            // Close mobile menu if open
+            mobileMenu.classList.remove("active");
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          });
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+        window.addEventListener("scroll", function () {
+          if (window.pageYOffset > 300) {
+            scrollTopBtn.classList.add("show");
+          } else {
+            scrollTopBtn.classList.remove("show");
+          }
+        });
+
+        scrollTopBtn.addEventListener("click", function () {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        });
+
+        // Hire button functionality
+        const hireBtn = document.getElementById("hireBtn");
+
+        hireBtn.addEventListener("click", function () {
+          document.querySelector("#contact").scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        mobileMenuBtn.addEventListener("click", function () {
+          mobileMenu.classList.toggle("active");
+          // Change icon based on menu state
+          if (mobileMenu.classList.contains("active")) {
+            mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+          } else {
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener("click", function (e) {
+          if (
+            !mobileMenu.contains(e.target) &&
+            !mobileMenuBtn.contains(e.target)
+          ) {
+            mobileMenu.classList.remove("active");
+            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+          }
+        });
+
+        // Form submission
+        const contactForm = document.querySelector(".contact-form form");
+        if (contactForm) {
+          contactForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            alert("Thank you for your message! I will get back to you soon.");
+            contactForm.reset();
+          });
+        }
+
+        // Newsletter form submission
+        const newsletterForm = document.querySelector(".newsletter-form");
+        if (newsletterForm) {
+          newsletterForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const emailInput =
+              newsletterForm.querySelector(".newsletter-input");
+            if (emailInput.value) {
+              alert("Thank you for subscribing to my newsletter!");
+              emailInput.value = "";
+            }
+          });
+        }
+
+        // Make particles move with scroll
+        let lastScrollY = window.scrollY;
+        window.addEventListener("scroll", function () {
+          const deltaY = window.scrollY - lastScrollY;
+          lastScrollY = window.scrollY;
+
+          // Update particles position based on scroll
+          if (
+            window.pJSDom &&
+            window.pJSDom[0] &&
+            window.pJSDom[0].pJS &&
+            window.pJSDom[0].pJS.particles
+          ) {
+            const particles = window.pJSDom[0].pJS.particles.array;
+            for (let i = 0; i < particles.length; i++) {
+              particles[i].position.y += deltaY * 0.1;
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
