@@ -1,146 +1,230 @@
-// Initialize Swiper
-var swiper = new Swiper(".mySwiper", {
-    pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
+// Initialize Particles.js with enhanced cursor-following effect
+document.addEventListener("DOMContentLoaded", function () {
+  // Set light theme by default
+  document.documentElement.className = "light-theme";
+
+  // Theme Switching
+  const themeDots = document.querySelectorAll(
+    ".theme-dot, .mobile-theme-switcher .theme-dot"
+  );
+
+  themeDots.forEach((dot) => {
+    dot.addEventListener("click", function () {
+      const theme = this.dataset.theme;
+      document.documentElement.className = theme + "-theme";
+      localStorage.setItem("theme", theme); // Save preference
+    });
+  });
+
+  // Load saved theme if user has selected before
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme && savedTheme !== "light") {
+    document.documentElement.className = savedTheme + "-theme";
+  }
+
+  // Particles.js configuration
+  const currentTheme = document.documentElement.classList.contains("dark-theme")
+    ? "dark"
+    : "light";
+  const particleColor = currentTheme === "dark" ? "#ffffff" : "#000000";
+
+  particlesJS("particles-js", {
+    particles: {
+      number: {
+        value: 80,
+        density: {
+          enable: true,
+          value_area: 800,
+        },
+      },
+      color: {
+        value: particleColor,
+      },
+      shape: {
+        type: "circle",
+        stroke: {
+          width: 0,
+          color: "#000000",
+        },
+      },
+      opacity: {
+        value: currentTheme === "dark" ? 0.3 : 0.1,
+        random: false,
+      },
+      size: {
+        value: 3,
+        random: true,
+        anim: {
+          enable: true,
+          speed: 4,
+          size_min: 0.3,
+          sync: false,
+        },
+      },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: particleColor,
+        opacity: currentTheme === "dark" ? 0.3 : 0.1,
+        width: 1,
+      },
+      move: {
+        enable: true,
+        speed: 2,
+        direction: "none",
+        random: true,
+        straight: false,
+        out_mode: "out",
+        bounce: false,
+        attract: {
+          enable: true,
+          rotateX: 600,
+          rotateY: 1200,
+        },
+      },
     },
-    autoplay: {
-        delay: 5000,
+    interactivity: {
+      detect_on: "canvas",
+      events: {
+        onhover: {
+          enable: true,
+          mode: "grab",
+          parallax: {
+            enable: true,
+            force: 60,
+            smooth: 10,
+          },
+        },
+        onclick: {
+          enable: true,
+          mode: "push",
+        },
+        resize: true,
+      },
+      modes: {
+        grab: {
+          distance: 200,
+          line_linked: {
+            opacity: 0.8,
+          },
+        },
+        bubble: {
+          distance: 400,
+          size: 40,
+          duration: 2,
+          opacity: 8,
+          speed: 3,
+        },
+        repulse: {
+          distance: 200,
+          duration: 0.4,
+        },
+        push: {
+          particles_nb: 4,
+        },
+        remove: {
+          particles_nb: 2,
+        },
+      },
     },
-    loop: true,
-});
+    retina_detect: true,
+  });
 
-// Mobile Navigation
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    hamburger.innerHTML = navLinks.classList.contains('active') ? 
-        '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-});
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+  // Smooth scrolling for navigation links
+  document
+    .querySelectorAll(".nav-links a, .mobile-menu-links a")
+    .forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        const href = this.getAttribute("href");
+        if (href.startsWith("#")) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth" });
+          }
+          // Close mobile menu if open
+          mobileMenu.classList.remove("active");
+          mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        }
+      });
     });
-});
 
-// Theme Switching
-const themeDots = document.querySelectorAll('.theme-dot');
-const themeToggle = document.querySelector('.theme-toggle');
+  // Scroll to top button
+  const scrollTopBtn = document.getElementById("scrollTopBtn");
 
-themeToggle.addEventListener('click', () => {
-    document.querySelector('.theme-switcher').classList.toggle('active');
-});
-
-themeDots.forEach(dot => {
-    dot.addEventListener('click', function() {
-        const theme = this.dataset.theme;
-        document.documentElement.className = theme + '-theme';
-        
-        // Save theme to localStorage
-        localStorage.setItem('theme', theme);
-    });
-});
-
-// Load saved theme
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) {
-    document.documentElement.className = savedTheme + '-theme';
-}
-
-// Mouse Following Animation
-const cursor = document.querySelector('.cursor');
-const cursorFollower = document.querySelector('.cursor-follower');
-
-document.addEventListener('mousemove', (e) => {
-    cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-    
-    // Add a small delay to the follower for a trailing effect
-    setTimeout(() => {
-        cursorFollower.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-    }, 50);
-});
-
-// Interactive cursor effects
-document.querySelectorAll('a, button, .project-card, .skill-card').forEach(element => {
-    element.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'scale(1.5)';
-        cursor.style.borderColor = 'var(--accent)';
-        cursorFollower.style.width = '20px';
-        cursorFollower.style.height = '20px';
-    });
-    
-    element.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'scale(1)';
-        cursor.style.borderColor = 'var(--primary)';
-        cursorFollower.style.width = '10px';
-        cursorFollower.style.height = '10px';
-    });
-});
-
-// Scroll to Top Button
-const scrollButton = document.querySelector('.scroll-to-top');
-
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 500) {
-        scrollButton.classList.add('show');
-    } else {
-        scrollButton.classList.remove('show');
-    }
-});
-
-scrollButton.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-// Floating Hire Me Button
-const floatingHireBtn = document.querySelector('.floating-hire-btn');
-
-window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", function () {
     if (window.pageYOffset > 300) {
-        floatingHireBtn.classList.add('show');
+      scrollTopBtn.classList.add("show");
     } else {
-        floatingHireBtn.classList.remove('show');
+      scrollTopBtn.classList.remove("show");
     }
-});
+  });
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            window.scrollTo({
-                top: target.offsetTop - 80,
-                behavior: 'smooth'
-            });
-            
-            // Close mobile menu if open
-            if (navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
-            }
-        }
+  scrollTopBtn.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
     });
-});
+  });
 
-// Hire me buttons functionality
-document.querySelectorAll('.hire-me-nav, .floating-hire-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const contactSection = document.querySelector('#contact');
-        if (contactSection) {
-            window.scrollTo({
-                top: contactSection.offsetTop - 80,
-                behavior: 'smooth'
-            });
-        }
+  // Hire button functionality
+  const hireBtn = document.getElementById("hireBtn");
+  const mobileHireBtn = document.getElementById("mobileHireBtn");
+
+  hireBtn.addEventListener("click", function () {
+    document.querySelector("#contact").scrollIntoView({
+      behavior: "smooth",
     });
+  });
+
+  mobileHireBtn.addEventListener("click", function () {
+    document.querySelector("#contact").scrollIntoView({
+      behavior: "smooth",
+    });
+  });
+
+  // Mobile menu functionality
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  mobileMenuBtn.addEventListener("click", function () {
+    mobileMenu.classList.toggle("active");
+    // Change icon based on menu state
+    if (mobileMenu.classList.contains("active")) {
+      mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+    } else {
+      mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener("click", function (e) {
+    if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+      mobileMenu.classList.remove("active");
+      mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+  });
+
+  // Form submission
+  const contactForm = document.querySelector(".contact-form form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Thank you for your message! I will get back to you soon.");
+      contactForm.reset();
+    });
+  }
+
+  // Newsletter form submission
+  const newsletterForm = document.querySelector(".newsletter-form");
+  if (newsletterForm) {
+    newsletterForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const emailInput = newsletterForm.querySelector(".newsletter-input");
+      if (emailInput.value) {
+        alert("Thank you for subscribing to my newsletter!");
+        emailInput.value = "";
+      }
+    });
+  }
 });

@@ -1,100 +1,55 @@
-{% comment %}
-<!-- <!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <title>Shofi Portfolio</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">   
-	<link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&family=Russo+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}">
-
-	<link id="theme-style" rel="stylesheet" type="text/css" href="">
-    
-
-</head>
-<body>
-
-    {% include 'base/navbar.html' %}
-
-    {% block content %}
-
-    {% endblock content %}
-
-    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>    
-	<script type="text/javascript" src="{% static '/js/bootstrap.min.js' %}"></script>
-	
-    
-</body>
-</html> -->
-
-{% endcomment %}
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shofi Portfolio</title>
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Developer Shofi Portfolio</title>
+
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
     <!-- Theme CSS -->
-    <link id="theme-style" rel="stylesheet" type="text/css" href="">
-</head>
-<body>
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-    
-    <!-- Theme Switcher Toggle -->
-    <div class="theme-toggle">
-        <i class="fas fa-palette"></i>
-    </div>
-    
+    <link id="theme-style" rel="stylesheet" type="text/css" href="" />
+    <!-- particles js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  </head>
+  <body>
     <!-- Theme Switcher -->
     <div class="theme-switcher">
-        <div class="theme-dot" id="light-dot" data-theme="light">
-            <span class="theme-label">Light Theme</span>
-        </div>
-        <div class="theme-dot" id="blue-dot" data-theme="blue">
-            <span class="theme-label">Blue Theme</span>
-        </div>
-        <div class="theme-dot" id="green-dot" data-theme="green">
-            <span class="theme-label">Green Theme</span>
-        </div>
-        <div class="theme-dot" id="purple-dot" data-theme="purple">
-            <span class="theme-label">Purple Theme</span>
-        </div>
+      <div class="theme-dot" id="light-dot" data-theme="light">
+        <span class="theme-label">Light Theme</span>
+      </div>
+      <div class="theme-dot" id="dark-dot" data-theme="dark">
+        <span class="theme-label">Dark Theme</span>
+      </div>
     </div>
-    
-    <!-- Floating Hire Me Button for Mobile -->
-    <a href="#contact" class="floating-hire-btn">Hire Me</a>
-    
-    <!-- Scroll to Top Button -->
-    <div class="scroll-to-top">
-        <i class="fas fa-arrow-up"></i>
+
+    <!-- Mobile Theme Switcher -->
+    <div class="mobile-theme-switcher">
+      <div class="theme-dot" id="mobile-light-dot" data-theme="light"></div>
+      <div class="theme-dot" id="mobile-dark-dot" data-theme="dark"></div>
     </div>
-    
-    {% include 'base/navbar.html' %}
-    {% block content %}
-    {% endblock %}
-    
+
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    {% include 'base/navbar.html' %} {% block content %} {% endblock %}
+
     <!-- Scripts -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="{% static 'js/script.js' %}"></script>
-</body>
+  </body>
 </html>
