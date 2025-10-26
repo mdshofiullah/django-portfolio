@@ -182,363 +182,7 @@
 
 {% endcomment %} {% load static %} {% block content %}
 
-<!-- Hero Section -->
-<!-- <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <h4>CREATE YOUR SITE LIKE A PRO</h4>
-                <h1>Hi, I'm <span>Shofiullah</span>, Web Developer</h1>
-                <p>I build innovative web solutions that help businesses grow and succeed in the digital world. With expertise in modern technologies, I create seamless user experiences.</p>
-                <a href="#contact" class="btn">Get Started</a>
-            </div>
-            <div class="hero-image">
-                <img src="{% static 'images/developer.png' %}" alt="Developer Illustration">
-            </div>
-        </div>
-    </section> -->
-
-<!-- Stats Section -->
-<!-- <div class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">+50</div>
-                    <div class="stat-label">Happy Clients</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">Years of Experience</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100+</div>
-                    <div class="stat-label">Projects Completed</div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-<!-- Skills Section -->
-<!-- <section class="skills-section" id="skills">
-        <div class="container">
-            <div class="skills-container">
-                <div class="skills-intro">
-                    <h2>What My Programming Skills Included?</h2>
-                    <p>I develop simple, intuitive and responsive user interfaces that help users get things done with less effort and time using these technologies.</p>
-                </div>
-                <div class="skills-grid">
-                    {% for skill in skills %}
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="{{ skill.icon }}"></i>
-                        </div>
-                        <h3>{{ skill.name }}</h3>
-                        <p>{{ skill.description }}</p>
-                    </div>
-                    {% empty %}
-                    <div class="default-content">
-                        <i class="fas fa-code"></i>
-                        <h3>Skills Coming Soon</h3>
-                        <p>We're currently updating our skills section. Check back later!</p>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-<!-- Pricing Section -->
-<!-- <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Project Pricing Plans</h2>
-                <p>Choose the perfect plan for your project needs and budget requirements.</p>
-            </div>
-            <div class="pricing-grid">
-                {% for plan in pricing_plans %}
-                <div class="pricing-card {% if plan.popular %}popular{% endif %}">
-                    {% if plan.badge %}
-                    <div class="popular-badge">{{ plan.badge }}</div>
-                    {% endif %}
-                    <div class="content">
-                        <h3>{{ plan.name }}</h3>
-                        <div class="price">${{ plan.price }}</div>
-                        <ul>
-                            {% for feature in plan.features.all %}
-                            <li>
-                                {% if feature.included %}
-                                <i class="fas fa-check"></i>
-                                {% else %}
-                                <i class="fas fa-times"></i>
-                                {% endif %}
-                                {{ feature.name }}
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <button class="btn">Choose Plan</button>
-                </div>
-                {% empty %}
-                <div class="default-content">
-                    <i class="fas fa-tags"></i>
-                    <h3>Pricing Plans Coming Soon</h3>
-                    <p>We're currently setting up our pricing plans. Please check back later!</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </section> -->
-
-<!-- Projects Section -->
-<!-- <section class="projects" id="projects">
-        <div class="container">
-            <div class="section-title">
-                <h2>Recent Projects</h2>
-                <p>Explore my latest work and see how I solve complex problems with elegant solutions.</p>
-            </div>
-            <div class="projects-grid">
-                {% for project in projects %}
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="{{ project.thumbnail.url }}" alt="{{ project.headline }}">
-                    </div>
-                    <div class="project-content">
-                        <h3>{{ project.headline }}</h3>
-                        <p>{{ project.sub_headline }}</p>
-                        <a href="{% url 'post' project.slug %}" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="default-content">
-                    <i class="fas fa-folder-open"></i>
-                    <h3>Projects Coming Soon</h3>
-                    <p>We're currently working on some exciting projects. Check back soon to see our work!</p>
-                </div>
-                {% endfor %}
-            </div>
-            <div class="text-center mt-5">
-                <a href="{% url 'posts' %}" class="btn">View All Projects</a>
-            </div>
-        </div>
-    </section> -->
-
-<!-- Testimonials Section -->
-<!-- <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Client Testimonials</h2>
-                <p>What my clients say about working with me.</p>
-            </div>
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    {% for testimonial in testimonials %}
-                    <div class="swiper-slide">
-                        <div class="testimonial-card">
-                            <p class="testimonial-content">{{ testimonial.content }}</p>
-                            <div class="testimonial-author">
-                                <div class="author-image">
-                                    <img src="{{ testimonial.client.photo.url }}" alt="{{ testimonial.client.name }}">
-                                </div>
-                                <div class="author-info">
-                                    <h4>{{ testimonial.client.name }}</h4>
-                                    <p>{{ testimonial.client.position }}, {{ testimonial.client.company }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <div class="swiper-slide">
-                        <div class="testimonial-card">
-                            <p class="testimonial-content">"Shofi delivered an outstanding website for our company. His attention to detail and technical expertise exceeded our expectations."</p>
-                            <div class="testimonial-author">
-                                <div class="author-image">
-                                    <img src="{% static 'images/default-user.jpg' %}" alt="Default User">
-                                </div>
-                                <div class="author-info">
-                                    <h4>John Doe</h4>
-                                    <p>CEO, Example Company</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="testimonial-card">
-                            <p class="testimonial-content">"Working with Shofi was a great experience. He understood our requirements perfectly and delivered the project ahead of schedule."</p>
-                            <div class="testimonial-author">
-                                <div class="author-image">
-                                    <img src="{% static 'images/default-user.jpg' %}" alt="Default User">
-                                </div>
-                                <div class="author-info">
-                                    <h4>Jane Smith</h4>
-                                    <p>Marketing Director, Tech Solutions</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-    </section> -->
-
-<!-- Contact Section -->
-<!-- <section class="contact" id="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
-                <p>Have a project in mind? Let's discuss how I can help bring your vision to life.</p>
-            </div>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <h3>Contact Information</h3>
-                        <div class="contact-detail">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h4>Location</h4>
-                                <p>New York, NY, USA</p>
-                            </div>
-                        </div>
-                        <div class="contact-detail">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h4>Email</h4>
-                                <p>hello@shofi.dev</p>
-                            </div>
-                        </div>
-                        <div class="contact-detail">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h4>Phone</h4>
-                                <p>+1 (555) 123-4567</p>
-                            </div>
-                        </div>
-                        
-                        <div class="social-links">
-                            <a href="#" class="social-link">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="#" class="social-link">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            <a href="#" class="social-link">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="social-link">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" class="form-control" placeholder="Enter subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Your Message</label>
-                            <textarea id="message" name="message" class="form-control" placeholder="Enter your message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
-                        <div id="formMessage" class="mt-3" style="display: none;"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-<!-- CTA Section -->
-<!-- <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Let's Start a Project Now</h2>
-                <p>Interested in working together? We should queue up a chat. I'll buy the coffee!</p>
-                <div class="cta-buttons">
-                    <a href="#contact" class="btn btn-white">Start a Project</a>
-                    <a href="#contact" class="btn btn-transparent">Schedule a Call</a>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-<!-- Coffee Section -->
-<!-- <section class="coffee">
-        <div class="container">
-            <div class="coffee-content">
-                <div class="coffee-icon">
-                    <i class="fas fa-mug-hot"></i>
-                </div>
-                <h3>Enjoyed my work? Buy me a coffee!</h3>
-                <p>If you appreciate my portfolio and would like to support my work, consider buying me a coffee. Your support helps me continue creating great content and projects.</p>
-                <a href="https://buymeacoffee.com/shofiullah" class="btn coffee-btn">
-                    <i class="fas fa-coffee"></i> Buy Me a Coffee
-                </a>
-            </div>
-        </div>
-    </section> -->
-
-<!-- Footer -->
-<!-- <footer>
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3>Shofi Dev</h3>
-        <p>
-          Creating innovative web solutions that help businesses grow and
-          succeed in the digital world.
-        </p>
-      </div>
-      <div class="footer-column">
-        <h3>Quick Links</h3>
-        <ul class="footer-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Services</h3>
-        <ul class="footer-links">
-          <li><a href="#">Web Development</a></li>
-          <li><a href="#">UI/UX Design</a></li>
-          <li><a href="#">Mobile Apps</a></li>
-          <li><a href="#">E-commerce</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Contact Info</h3>
-        <ul class="footer-links">
-          <li><i class="fas fa-map-marker-alt"></i> New York, NY, USA</li>
-          <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-          <li><i class="fas fa-envelope"></i> hello@shofi.dev</li>
-        </ul>
-      </div>
-    </div>
-    <div class="copyright">
-      <p>&copy; {% now "Y" %} Shofi Dev. All Rights Reserved.</p>
-    </div>
-  </div>
-</footer> -->
-
-<!-- Hero Section -->
+<!-- Hero Sections -->
 <section class="hero" id="home">
   <div class="container">
     <div class="hero-content">
@@ -552,10 +196,7 @@
       <button class="btn">Get Started</button>
     </div>
     <div class="hero-image">
-      <img
-        src="https://images.unsplash.com/photo-1579403124614-197f69d8187b?auto=format&fit=crop&w=500&h=600&q=80"
-        alt="Developer Illustration"
-      />
+      <img src="{% static 'images/1.jpg' %}" alt="Developer Illustration" />
     </div>
   </div>
 </section>
@@ -570,10 +211,7 @@
     <div class="projects">
       <div class="project-card">
         <div class="project-image">
-          <img
-            src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&h=300&q=80"
-            alt="Project 1"
-          />
+          <img src="{% static 'images/ecom.jpg' %}" alt="Project 1" />
         </div>
         <div class="project-content">
           <h3>E-Commerce Platform</h3>
@@ -590,10 +228,7 @@
       </div>
       <div class="project-card">
         <div class="project-image">
-          <img
-            src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=600&h=300&q=80"
-            alt="Project 2"
-          />
+          <img src="{% static 'images/dash.jpg' %}" alt="Project 2" />
         </div>
         <div class="project-content">
           <h3>Finance Dashboard</h3>
@@ -610,10 +245,7 @@
       </div>
       <div class="project-card">
         <div class="project-image">
-          <img
-            src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=600&h=300&q=80"
-            alt="Project 3"
-          />
+          <img src="{% static 'images/p.jpg' %}" alt="Project 3" />
         </div>
         <div class="project-content">
           <h3>Travel Blog Platform</h3>
@@ -698,7 +330,10 @@
           consider buying me a coffee. Your support helps me create more amazing
           content and open-source projects.
         </p>
-        <a href="#" class="coffee-btn">
+        <a
+          href="https://www.buymeacoffee.com/shofiullah"
+          class="coffee-btn"
+        >
           <i class="fas fa-coffee"></i> Buy Me a Coffee
         </a>
       </div>
@@ -717,8 +352,12 @@
           call to discuss your project requirements and how I can help.
         </p>
         <div class="cta-buttons">
-          <button class="cta-btn">Hire Me Now</button>
-          <button class="cta-btn outline">Schedule a Call</button>
+          <button class="cta-btn">
+            <a href="https://www.linkedin.com/in/cse-md-shofiullah/">
+              Hire Me Now</a
+            >
+          </button>
+          <a href="https://wa.me/01682019696?text=your-message"><button class="cta-btn outline">Schedule a Call</button></a>
         </div>
       </div>
     </div>
@@ -764,10 +403,7 @@
         <button class="btn" style="margin-top: 30px">Download CV</button>
       </div>
       <div class="about-image">
-        <img
-          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&h=600&q=80"
-          alt="About Me"
-        />
+        <img src="{% static 'images/1.jpg' %}" alt="About Me" />
       </div>
     </div>
   </div>
@@ -828,7 +464,11 @@
             </div>
             <div class="contact-text">
               <h4>Email</h4>
-              <p><a href="mailto:mdshofiullah65@gmail.com">mdshofiullah65@gmail.com</a></p>
+              <p>
+                <a href="mailto:mdshofiullah65@gmail.com"
+                  >mdshofiullah65@gmail.com</a
+                >
+              </p>
             </div>
           </div>
           <div class="contact-detail">
@@ -842,10 +482,24 @@
           </div>
 
           <div class="social-links">
-            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://github.com/mdshofiullah" class="social-link"
+              ><i class="fab fa-github"></i
+            ></a>
+            <a
+              href="https://www.linkedin.com/in/cse-md-shofiullah/"
+              class="social-link"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+            <a
+              href="https://www.facebook.com/md.shofiullah.359/"
+              class="social-link"
+              ><i class="fab fa-facebook"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/md.sh0fiullah/"
+              class="social-link"
+              ><i class="fab fa-instagram"></i
+            ></a>
           </div>
         </div>
 
@@ -954,8 +608,16 @@
         <h3>Contact Info</h3>
         <ul class="footer-links">
           <li><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</li>
-          <li><i class="fas fa-phone"></i> <a href="tel:+8801682019696">+8801682019696</a></li>
-          <li><i class="fas fa-envelope"></i> <a href="mailto:mdshofiullah65@gmail.com">mdshofiullah65@gmail.com</a></li>
+          <li>
+            <i class="fas fa-phone"></i>
+            <a href="tel:+8801682019696">+8801682019696</a>
+          </li>
+          <li>
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:mdshofiullah65@gmail.com"
+              >mdshofiullah65@gmail.com</a
+            >
+          </li>
         </ul>
       </div>
     </div>
