@@ -1,0 +1,10 @@
+# Netlify hosts the static portfolio page only. The Django app (in ./shofi)
+# is deployed separately on Render (see render.yaml).
+#
+# Using "site" as the base directory keeps Netlify from detecting the root
+# Pipfile and trying to install Python/Django dependencies, which aren't
+# needed for a static deploy (and include Windows-only packages like pywin32).
+[build]
+  base = "site"
+  publish = "."
+  command = ""
