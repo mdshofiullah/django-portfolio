@@ -43,7 +43,46 @@
         padding: 0;
         box-sizing: border-box;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        transition: var(--transition);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body,
+      nav,
+      footer,
+      .project-card,
+      .service-card,
+      .contact-card,
+      .contact-form,
+      .coffee-section,
+      .newsletter-section,
+      .form-control,
+      .newsletter-input {
+        transition: background-color 0.3s ease, color 0.3s ease,
+          border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      }
+
+      section[id] {
+        scroll-margin-top: 80px;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 3px;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
 
       body {
@@ -147,6 +186,7 @@
       .theme-dot {
         width: 30px;
         height: 30px;
+        padding: 0;
         border-radius: 50%;
         cursor: pointer;
         border: 2px solid var(--text-light);
@@ -157,12 +197,25 @@
         transform: scale(1.1);
       }
 
-      #dark-dot {
+      #dark-dot,
+      #mobile-dark-dot {
         background: linear-gradient(135deg, #121212, #333333);
       }
 
-      #light-dot {
+      #light-dot,
+      #mobile-light-dot {
         background: linear-gradient(135deg, #f8fafc, #cbd5e1);
+      }
+
+      .theme-dot[aria-pressed="true"] {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--card-bg), 0 0 0 5px var(--primary);
+      }
+
+      .theme-option {
+        position: relative;
+        display: flex;
+        align-items: center;
       }
 
       .theme-label {
@@ -189,14 +242,15 @@
       .mobile-theme-switcher {
         display: none;
         position: fixed;
-        bottom: 100px;
-        right: 20px;
+        bottom: 15px;
+        left: 15px;
         z-index: 100;
         background: var(--card-bg);
         border-radius: 30px;
-        padding: 10px;
+        padding: 8px;
         box-shadow: var(--shadow);
-        flex-direction: column;
+        border: var(--border);
+        flex-direction: row;
         gap: 10px;
       }
 
@@ -210,7 +264,7 @@
         box-shadow: var(--shadow);
         position: sticky;
         top: 0;
-        z-index: 10;
+        z-index: 1001;
       }
 
       .nav-logo {
@@ -297,7 +351,7 @@
         color: var(--primary);
         font-size: 18px;
         padding: 10px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: var(--border);
       }
 
       /* ===== Hero Section ===== */
@@ -308,6 +362,19 @@
         padding: var(--section-padding);
         position: relative;
         overflow: hidden;
+      }
+
+      .hero > .container {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        width: 100%;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
       }
 
       .hero-content {
@@ -372,6 +439,95 @@
         }
         100% {
           transform: translateY(0px);
+        }
+      }
+
+      /* ===== Profile Photo Frame ===== */
+      @property --frame-angle {
+        syntax: "<angle>";
+        initial-value: 0deg;
+        inherits: false;
+      }
+
+      .profile-frame {
+        position: relative;
+        width: min(320px, 80vw);
+        aspect-ratio: 3 / 4;
+        padding: 4px;
+        border-radius: 24px;
+        background: conic-gradient(
+          from var(--frame-angle),
+          var(--primary),
+          transparent 30%,
+          var(--accent) 50%,
+          transparent 70%,
+          var(--primary)
+        );
+        animation: frame-spin 6s linear infinite;
+        box-shadow: 0 0 40px rgba(255, 255, 255, 0.08), var(--shadow);
+        isolation: isolate;
+      }
+
+      .profile-frame::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transform: translate(18px, 18px);
+        border: 2px solid var(--accent);
+        border-radius: 24px;
+        opacity: 0.35;
+        z-index: -1;
+        transition: var(--transition);
+      }
+
+      .profile-frame::after {
+        content: "";
+        position: absolute;
+        inset: 4px;
+        border-radius: 20px;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.35),
+          transparent 45%
+        );
+        pointer-events: none;
+      }
+
+      .profile-frame img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: 20px;
+        filter: grayscale(35%) contrast(1.05);
+        transition: filter 0.5s ease, transform 0.5s ease;
+      }
+
+      .profile-frame:hover img {
+        filter: grayscale(0%) contrast(1.05);
+      }
+
+      .profile-frame:hover::before {
+        transform: translate(10px, 10px);
+        opacity: 0.6;
+      }
+
+      .profile-frame--still {
+        animation-duration: 12s;
+      }
+
+      @keyframes frame-spin {
+        to {
+          --frame-angle: 360deg;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .profile-frame,
+        .hero-image {
+          animation: none;
         }
       }
 
@@ -575,15 +731,21 @@
 
       /* ===== CTA Section ===== */
       .cta-section {
+        position: relative;
+        overflow: hidden;
         background: linear-gradient(
             135deg,
-            rgba(255, 255, 255, 0.1),
-            rgba(255, 255, 255, 0.05)
+            rgba(0, 0, 0, 0.88) 0%,
+            rgba(0, 0, 0, 0.7) 55%,
+            rgba(0, 0, 0, 0.55) 100%
           ),
           url("https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1200&q=80");
+        background-color: #0d0d0d;
         background-size: cover;
         background-position: center;
-        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+        color: #ffffff;
         text-align: center;
         padding: 100px 20px;
         border-radius: 20px;
@@ -596,9 +758,10 @@
       }
 
       .cta-content h2 {
-        font-size: 2.5rem;
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
         margin-bottom: 20px;
-        color: white;
+        color: #ffffff;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
       }
 
       .cta-content p {
@@ -615,8 +778,11 @@
       }
 
       .cta-btn {
-        background: white;
-        color: black;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: #ffffff;
+        color: #000000;
         border: none;
         padding: 15px 40px;
         border-radius: 30px;
@@ -628,8 +794,13 @@
 
       .cta-btn.outline {
         background: transparent;
-        border: 2px solid white;
-        color: white;
+        border: 2px solid #ffffff;
+        color: #ffffff;
+      }
+
+      .cta-btn.outline:hover {
+        background: #ffffff;
+        color: #000000;
       }
 
       .cta-btn:hover {
@@ -869,6 +1040,50 @@
         resize: vertical;
       }
 
+      .form-control::placeholder,
+      .newsletter-input::placeholder {
+        color: var(--text-light);
+      }
+
+      .form-status {
+        margin: 15px 0 0;
+        font-weight: 600;
+        min-height: 1.6em;
+      }
+
+      .form-status.success {
+        color: #2e9e5b;
+      }
+
+      .form-status.error {
+        color: #d64545;
+      }
+
+      button[type="submit"]:disabled {
+        opacity: 0.6;
+        cursor: wait;
+        transform: none;
+      }
+
+      .hidden-field {
+        display: none;
+      }
+
+      .contact-text a,
+      .footer-links a {
+        color: inherit;
+      }
+
+      .contact-text a:hover {
+        color: var(--primary);
+        text-decoration: underline;
+      }
+
+      .projects-more {
+        text-align: center;
+        margin-top: 50px;
+      }
+
       /* ===== Footer ===== */
       footer {
         background: var(--card-bg);
@@ -960,6 +1175,16 @@
 
       /* ===== Responsive Design ===== */
       @media (max-width: 992px) {
+        .hero > .container {
+          flex-direction: column;
+          text-align: center;
+          gap: 30px;
+        }
+
+        .hero-buttons {
+          justify-content: center;
+        }
+
         .hero {
           flex-direction: column;
           text-align: center;
@@ -1079,17 +1304,33 @@
           right: -100%;
         }
 
-        .mobile-theme-switcher {
-          bottom: 150px;
+        .cta-section {
+          padding: 60px 20px;
+        }
+
+        .contact-form {
+          padding: 30px 20px;
         }
       }
     </style>
   </head>
   <body>
     <!-- Mobile Theme Switcher -->
-    <div class="mobile-theme-switcher">
-      <div class="theme-dot" id="mobile-dark-dot" data-theme="dark"></div>
-      <div class="theme-dot" id="mobile-light-dot" data-theme="light"></div>
+    <div class="mobile-theme-switcher" role="group" aria-label="Color theme">
+      <button type="button" class="theme-dot" id="mobile-dark-dot" data-theme="dark" aria-label="Dark theme" aria-pressed="true"></button>
+      <button type="button" class="theme-dot" id="mobile-light-dot" data-theme="light" aria-label="Light theme" aria-pressed="false"></button>
+    </div>
+
+    <!-- Desktop Theme Switcher -->
+    <div class="theme-switcher" role="group" aria-label="Color theme">
+      <div class="theme-option">
+        <button type="button" class="theme-dot" id="dark-dot" data-theme="dark" aria-label="Dark theme" aria-pressed="true"></button>
+        <span class="theme-label">Dark</span>
+      </div>
+      <div class="theme-option">
+        <button type="button" class="theme-dot" id="light-dot" data-theme="light" aria-label="Light theme" aria-pressed="false"></button>
+        <span class="theme-label">Light</span>
+      </div>
     </div>
 
     <!-- Particles Background -->
@@ -1097,7 +1338,7 @@
 
     <!-- Navigation -->
     <nav>
-      <div class="nav-logo"><span>Shofi</span><span>Dev</span></div>
+      <a href="#home" class="nav-logo" aria-label="Shofi Dev, back to top"><span>Shofi</span><span>Dev</span></a>
       <div class="nav-links">
         <a href="#home">Home</a>
         <a href="#projects">Projects</a>
@@ -1105,8 +1346,8 @@
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </div>
-      <button class="btn nav-hire-btn">Hire Me</button>
-      <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <a href="#contact" class="btn nav-hire-btn">Hire Me</a>
+      <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
         <i class="fas fa-bars"></i>
       </button>
     </nav>
@@ -1135,13 +1376,20 @@
             succeed in the digital world. With expertise in modern technologies,
             I create seamless user experiences.
           </p>
-          <button class="btn">Get Started</button>
+          <div class="hero-buttons">
+            <a href="#contact" class="btn">Get Started</a>
+            <a href="#projects" class="btn btn-outline">View My Work</a>
+          </div>
         </div>
         <div class="hero-image">
-          <img
-            src="https://images.unsplash.com/photo-1579403124614-197f69d8187b?auto=format&fit=crop&w=500&h=600&q=80"
-            alt="Developer Illustration"
-          />
+          <div class="profile-frame">
+            <img
+              src="images/shofi-profile.jpg"
+              alt="Portrait of Shofi, Web Developer"
+              width="300"
+              height="400"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -1215,6 +1463,11 @@
             </div>
           </div>
         </div>
+        <div class="projects-more">
+          <a href="https://github.com/mdshofiullah" class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github"></i> See More on GitHub
+          </a>
+        </div>
       </div>
     </section>
 
@@ -1235,7 +1488,7 @@
               Custom website development with modern frameworks and responsive
               design.
             </p>
-            <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+            <a href="#contact">Learn More <i class="fas fa-arrow-right"></i></a>
           </div>
           <div class="feature-card">
             <div class="feature-icon">
@@ -1245,7 +1498,7 @@
             <p>
               Native and cross-platform mobile applications with seamless UX.
             </p>
-            <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+            <a href="#contact">Learn More <i class="fas fa-arrow-right"></i></a>
           </div>
           <div class="feature-card">
             <div class="feature-icon">
@@ -1256,7 +1509,7 @@
               User-centered design solutions that enhance engagement and
               conversion.
             </p>
-            <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+            <a href="#contact">Learn More <i class="fas fa-arrow-right"></i></a>
           </div>
           <div class="feature-card">
             <div class="feature-icon">
@@ -1267,7 +1520,7 @@
               Improve your search rankings and drive organic traffic to your
               website.
             </p>
-            <a href="#">Learn More <i class="fas fa-arrow-right"></i></a>
+            <a href="#contact">Learn More <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
       </div>
@@ -1287,7 +1540,7 @@
               consider buying me a coffee. Your support helps me create more
               amazing content and open-source projects.
             </p>
-            <a href="#" class="coffee-btn">
+            <a href="https://www.buymeacoffee.com/shofiullah" class="coffee-btn" target="_blank" rel="noopener noreferrer">
               <i class="fas fa-coffee"></i> Buy Me a Coffee
             </a>
           </div>
@@ -1306,8 +1559,8 @@
               call to discuss your project requirements and how I can help.
             </p>
             <div class="cta-buttons">
-              <button class="cta-btn">Hire Me Now</button>
-              <button class="cta-btn outline">Schedule a Call</button>
+              <a href="#contact" class="cta-btn"><i class="fas fa-briefcase"></i> Hire Me Now</a>
+              <a href="https://wa.me/8801682019696?text=Hi%20Shofi%2C%20I%27d%20like%20to%20schedule%20a%20call%20about%20a%20project." class="cta-btn outline" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> Schedule a Call</a>
             </div>
           </div>
         </div>
@@ -1352,13 +1605,20 @@
               <div class="skill-tag">Responsive Design</div>
             </div>
 
-            <button class="btn" style="margin-top: 30px">Download CV</button>
+            <a href="files/shofi-resume.pdf" class="btn" style="margin-top: 30px" download="Shofi-Resume.pdf">
+              <i class="fas fa-download"></i> Download CV
+            </a>
           </div>
           <div class="about-image">
-            <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&h=600&q=80"
-              alt="About Me"
-            />
+            <div class="profile-frame profile-frame--still">
+              <img
+                src="images/shofi-profile.jpg"
+                alt="Shofi in professional attire"
+                width="300"
+                height="400"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1377,14 +1637,31 @@
               Subscribe to my newsletter to receive updates on new projects,
               tutorials, and web development insights.
             </p>
-            <form class="newsletter-form">
+            <form
+              class="newsletter-form js-netlify-form"
+              name="newsletter"
+              method="POST"
+              action="/"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              data-success="Thanks for subscribing! You're on the list."
+            >
+              <p class="hidden-field">
+                <label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+              </p>
+              <label for="newsletter-email" class="sr-only">Email address</label>
               <input
                 type="email"
+                id="newsletter-email"
+                name="email"
                 class="newsletter-input"
                 placeholder="Your email address"
+                autocomplete="email"
+                required
               />
               <button type="submit" class="newsletter-btn">Subscribe</button>
             </form>
+            <p class="form-status" role="status" aria-live="polite"></p>
           </div>
         </div>
       </div>
@@ -1419,7 +1696,7 @@
                 </div>
                 <div class="contact-text">
                   <h4>Email</h4>
-                  <p>contact@shofi.dev</p>
+                  <p><a href="mailto:mdshofiullah65@gmail.com">mdshofiullah65@gmail.com</a></p>
                 </div>
               </div>
               <div class="contact-detail">
@@ -1428,21 +1705,21 @@
                 </div>
                 <div class="contact-text">
                   <h4>Phone</h4>
-                  <p>+880 123 456 789</p>
+                  <p><a href="tel:+8801682019696">+880 1682-019696</a></p>
                 </div>
               </div>
 
               <div class="social-links">
-                <a href="#" class="social-link"
+                <a href="https://github.com/mdshofiullah" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
                   ><i class="fab fa-github"></i
                 ></a>
-                <a href="#" class="social-link"
+                <a href="https://www.linkedin.com/in/cse-md-shofiullah/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
                   ><i class="fab fa-linkedin"></i
                 ></a>
-                <a href="#" class="social-link"
-                  ><i class="fab fa-twitter"></i
+                <a href="https://www.facebook.com/md.shofiullah.359/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                  ><i class="fab fa-facebook-f"></i
                 ></a>
-                <a href="#" class="social-link"
+                <a href="https://www.instagram.com/md.sh0fiullah/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
                   ><i class="fab fa-instagram"></i
                 ></a>
               </div>
@@ -1473,13 +1750,27 @@
 
           <div class="contact-form">
             <h3>Send Me a Message</h3>
-            <form>
+            <form
+              class="js-netlify-form"
+              name="contact"
+              method="POST"
+              action="/"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              data-success="Thank you for your message! I'll get back to you soon."
+            >
+              <p class="hidden-field">
+                <label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+              </p>
               <div class="form-group">
                 <label for="name">Full Name</label>
                 <input
                   type="text"
                   id="name"
+                  name="name"
                   class="form-control"
+                  autocomplete="name"
+                  required
                   placeholder="Enter your name"
                 />
               </div>
@@ -1488,7 +1779,10 @@
                 <input
                   type="email"
                   id="email"
+                  name="email"
                   class="form-control"
+                  autocomplete="email"
+                  required
                   placeholder="Enter your email"
                 />
               </div>
@@ -1497,7 +1791,9 @@
                 <input
                   type="text"
                   id="subject"
+                  name="subject"
                   class="form-control"
+                  required
                   placeholder="Enter subject"
                 />
               </div>
@@ -1505,13 +1801,16 @@
                 <label for="message">Your Message</label>
                 <textarea
                   id="message"
+                  name="message"
                   class="form-control"
+                  required
                   placeholder="Enter your message"
                 ></textarea>
               </div>
               <button type="submit" class="btn" style="width: 100%">
                 Send Message
               </button>
+              <p class="form-status" role="status" aria-live="polite"></p>
             </form>
           </div>
         </div>
@@ -1542,262 +1841,237 @@
           <div class="footer-column">
             <h3>Services</h3>
             <ul class="footer-links">
-              <li><a href="#">Web Development</a></li>
-              <li><a href="#">UI/UX Design</a></li>
-              <li><a href="#">E-commerce Solutions</a></li>
-              <li><a href="#">SEO Optimization</a></li>
-              <li><a href="#">App Development</a></li>
+              <li><a href="#services">Web Development</a></li>
+              <li><a href="#services">UI/UX Design</a></li>
+              <li><a href="#services">E-commerce Solutions</a></li>
+              <li><a href="#services">SEO Optimization</a></li>
+              <li><a href="#services">App Development</a></li>
             </ul>
           </div>
           <div class="footer-column">
             <h3>Contact Info</h3>
             <ul class="footer-links">
               <li><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</li>
-              <li><i class="fas fa-phone"></i> +880 123 456 789</li>
-              <li><i class="fas fa-envelope"></i> contact@shofi.dev</li>
+              <li><a href="tel:+8801682019696"><i class="fas fa-phone"></i> +880 1682-019696</a></li>
+              <li><a href="mailto:mdshofiullah65@gmail.com"><i class="fas fa-envelope"></i> mdshofiullah65@gmail.com</a></li>
             </ul>
           </div>
         </div>
         <div class="copyright">
-          <p>&copy; 2023 Shofi Dev. All Rights Reserved.</p>
+          <p>&copy; <span id="year">2026</span> Shofi Dev. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
 
     <!-- Floating Buttons -->
     <div class="floating-buttons">
-      <button class="scroll-top-btn" id="scrollTopBtn">
+      <button type="button" class="scroll-top-btn" id="scrollTopBtn" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
       </button>
-      <button class="hire-btn" id="hireBtn">
+      <button type="button" class="hire-btn" id="hireBtn" aria-label="Contact me">
         <i class="fas fa-comment"></i>
       </button>
     </div>
 
     <script>
-      // Initialize Particles.js with monochrome settings
       document.addEventListener("DOMContentLoaded", function () {
-        // Set default to dark theme
-        document.documentElement.className = "dark-theme";
+        const root = document.documentElement;
 
-        const particleColor = "#ffffff";
-
-        particlesJS("particles-js", {
-          particles: {
-            number: { value: 80, density: { enable: true, value_area: 800 } },
-            color: { value: particleColor },
-            shape: { type: "circle" },
-            opacity: { value: 0.1, random: false },
-            size: { value: 3, random: true },
-            line_linked: {
-              enable: true,
-              distance: 150,
-              color: particleColor,
-              opacity: 0.1,
-              width: 1,
-            },
-            move: {
-              enable: true,
-              speed: 2,
-              direction: "none",
-              random: false,
-              straight: false,
-              out_mode: "out",
-              bounce: false,
-            },
-          },
-          interactivity: {
-            detect_on: "canvas",
-            events: {
-              onhover: { enable: true, mode: "grab" },
-              onclick: { enable: true, mode: "push" },
-              resize: true,
-            },
-            modes: {
-              grab: { distance: 140, line_linked: { opacity: 0.2 } },
-              push: { particles_nb: 4 },
-            },
-          },
-          retina_detect: true,
-        });
-
-        // Theme Switching
-        const themeDots = document.querySelectorAll(
-          ".theme-dot, .mobile-theme-switcher .theme-dot"
-        );
-
-        themeDots.forEach((dot) => {
-          dot.addEventListener("click", function () {
-            const theme = this.dataset.theme;
-            document.documentElement.className = theme + "-theme";
-
-            // Update particles color based on theme
-            const particleColor = theme === "dark" ? "#ffffff" : "#000000";
-            particlesJS("particles-js", {
-              particles: {
-                number: {
-                  value: 80,
-                  density: { enable: true, value_area: 800 },
-                },
-                color: { value: particleColor },
-                shape: { type: "circle" },
-                opacity: { value: 0.1, random: false },
-                size: { value: 3, random: true },
-                line_linked: {
-                  enable: true,
-                  distance: 150,
-                  color: particleColor,
-                  opacity: 0.1,
-                  width: 1,
-                },
-                move: {
-                  enable: true,
-                  speed: 2,
-                  direction: "none",
-                  random: false,
-                  straight: false,
-                  out_mode: "out",
-                  bounce: false,
-                },
+        // ===== Particles background =====
+        function initParticles(theme) {
+          if (typeof window.particlesJS !== "function") return;
+          if (window.pJSDom && window.pJSDom.length) {
+            window.pJSDom.forEach((p) => p.pJS.fn.vendors.destroypJS());
+            window.pJSDom = [];
+          }
+          const particleColor = theme === "light" ? "#000000" : "#ffffff";
+          window.particlesJS("particles-js", {
+            particles: {
+              number: { value: 80, density: { enable: true, value_area: 800 } },
+              color: { value: particleColor },
+              shape: { type: "circle" },
+              opacity: { value: 0.1, random: false },
+              size: { value: 3, random: true },
+              line_linked: {
+                enable: true,
+                distance: 150,
+                color: particleColor,
+                opacity: 0.1,
+                width: 1,
               },
-              interactivity: {
-                detect_on: "canvas",
-                events: {
-                  onhover: { enable: true, mode: "grab" },
-                  onclick: { enable: true, mode: "push" },
-                  resize: true,
-                },
-                modes: {
-                  grab: { distance: 140, line_linked: { opacity: 0.2 } },
-                  push: { particles_nb: 4 },
-                },
+              move: {
+                enable: true,
+                speed: 2,
+                direction: "none",
+                random: false,
+                straight: false,
+                out_mode: "out",
+                bounce: false,
               },
-              retina_detect: true,
-            });
-
-            // Save theme to localStorage
-            localStorage.setItem("theme", theme);
+            },
+            interactivity: {
+              detect_on: "canvas",
+              events: {
+                onhover: { enable: true, mode: "grab" },
+                onclick: { enable: true, mode: "push" },
+                resize: true,
+              },
+              modes: {
+                grab: { distance: 140, line_linked: { opacity: 0.2 } },
+                push: { particles_nb: 4 },
+              },
+            },
+            retina_detect: true,
           });
-        });
-
-        // Load saved theme
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme) {
-          document.documentElement.className = savedTheme + "-theme";
         }
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-          anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute("href"));
-            if (target) {
-              target.scrollIntoView({
-                behavior: "smooth",
-              });
-            }
+        // ===== Theme switching =====
+        const themeDots = document.querySelectorAll(".theme-dot");
 
-            // Close mobile menu if open
-            mobileMenu.classList.remove("active");
-            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-          });
-        });
-
-        // Scroll to top button
-        const scrollTopBtn = document.getElementById("scrollTopBtn");
-
-        window.addEventListener("scroll", function () {
-          if (window.pageYOffset > 300) {
-            scrollTopBtn.classList.add("show");
-          } else {
-            scrollTopBtn.classList.remove("show");
+        function applyTheme(theme, save) {
+          root.className = theme + "-theme";
+          themeDots.forEach((dot) =>
+            dot.setAttribute("aria-pressed", String(dot.dataset.theme === theme))
+          );
+          initParticles(theme);
+          if (save) {
+            try {
+              localStorage.setItem("theme", theme);
+            } catch (e) {}
           }
-        });
+        }
 
-        scrollTopBtn.addEventListener("click", function () {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
-        });
+        let savedTheme = null;
+        try {
+          savedTheme = localStorage.getItem("theme");
+        } catch (e) {}
+        applyTheme(savedTheme === "light" ? "light" : "dark", false);
 
-        // Hire button functionality
-        const hireBtn = document.getElementById("hireBtn");
+        themeDots.forEach((dot) =>
+          dot.addEventListener("click", () => applyTheme(dot.dataset.theme, true))
+        );
 
-        hireBtn.addEventListener("click", function () {
-          document.querySelector("#contact").scrollIntoView({
-            behavior: "smooth",
-          });
-        });
-
-        // Mobile menu functionality
+        // ===== Mobile menu =====
         const mobileMenuBtn = document.getElementById("mobileMenuBtn");
         const mobileMenu = document.getElementById("mobileMenu");
 
-        mobileMenuBtn.addEventListener("click", function () {
-          mobileMenu.classList.toggle("active");
-          // Change icon based on menu state
-          if (mobileMenu.classList.contains("active")) {
-            mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
-          } else {
-            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-          }
+        function setMenu(open) {
+          mobileMenu.classList.toggle("active", open);
+          mobileMenuBtn.setAttribute("aria-expanded", String(open));
+          mobileMenuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+          mobileMenuBtn.innerHTML = open
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
+        }
+
+        mobileMenuBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          setMenu(!mobileMenu.classList.contains("active"));
         });
 
-        // Close menu when clicking outside
-        document.addEventListener("click", function (e) {
+        document.addEventListener("click", (e) => {
           if (
+            mobileMenu.classList.contains("active") &&
             !mobileMenu.contains(e.target) &&
             !mobileMenuBtn.contains(e.target)
           ) {
-            mobileMenu.classList.remove("active");
-            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            setMenu(false);
           }
         });
 
-        // Form submission
-        const contactForm = document.querySelector(".contact-form form");
-        if (contactForm) {
-          contactForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            alert("Thank you for your message! I will get back to you soon.");
-            contactForm.reset();
-          });
-        }
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") setMenu(false);
+        });
 
-        // Newsletter form submission
-        const newsletterForm = document.querySelector(".newsletter-form");
-        if (newsletterForm) {
-          newsletterForm.addEventListener("submit", function (e) {
+        // ===== Smooth scrolling for in-page links =====
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            const id = this.getAttribute("href");
+            if (id.length < 2) return;
+            const target = document.querySelector(id);
+            if (!target) return;
             e.preventDefault();
-            const emailInput =
-              newsletterForm.querySelector(".newsletter-input");
-            if (emailInput.value) {
-              alert("Thank you for subscribing to my newsletter!");
-              emailInput.value = "";
+            target.scrollIntoView({ behavior: "smooth" });
+            history.pushState(null, "", id);
+            setMenu(false);
+          });
+        });
+
+        // ===== Floating buttons =====
+        const scrollTopBtn = document.getElementById("scrollTopBtn");
+        window.addEventListener(
+          "scroll",
+          () => scrollTopBtn.classList.toggle("show", window.scrollY > 300),
+          { passive: true }
+        );
+        scrollTopBtn.addEventListener("click", () =>
+          window.scrollTo({ top: 0, behavior: "smooth" })
+        );
+        document.getElementById("hireBtn").addEventListener("click", () =>
+          document.querySelector("#contact").scrollIntoView({ behavior: "smooth" })
+        );
+
+        // ===== Netlify Forms (AJAX submit with inline feedback) =====
+        document.querySelectorAll("form.js-netlify-form").forEach((form) => {
+          const status =
+            form.querySelector(".form-status") ||
+            form.parentElement.querySelector(".form-status");
+          const submitBtn = form.querySelector('button[type="submit"]');
+
+          form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            if (!form.checkValidity()) {
+              form.reportValidity();
+              return;
+            }
+
+            const data = new FormData(form);
+            data.set("form-name", form.getAttribute("name"));
+
+            const originalLabel = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Sending...";
+            status.className = "form-status";
+            status.textContent = "";
+
+            try {
+              const res = await fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(data).toString(),
+              });
+              if (!res.ok) throw new Error("Request failed: " + res.status);
+              status.classList.add("success");
+              status.textContent = form.dataset.success || "Thank you!";
+              form.reset();
+            } catch (err) {
+              status.classList.add("error");
+              status.textContent =
+                "Sorry, something went wrong. Please try again or email me directly at mdshofiullah65@gmail.com.";
+            } finally {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalLabel;
             }
           });
-        }
+        });
 
-        // Make particles move with scroll
+        // ===== Footer year =====
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // ===== Subtle parallax for particles on scroll =====
         let lastScrollY = window.scrollY;
-        window.addEventListener("scroll", function () {
-          const deltaY = window.scrollY - lastScrollY;
-          lastScrollY = window.scrollY;
-
-          // Update particles position based on scroll
-          if (
-            window.pJSDom &&
-            window.pJSDom[0] &&
-            window.pJSDom[0].pJS &&
-            window.pJSDom[0].pJS.particles
-          ) {
-            const particles = window.pJSDom[0].pJS.particles.array;
-            for (let i = 0; i < particles.length; i++) {
-              particles[i].position.y += deltaY * 0.1;
+        window.addEventListener(
+          "scroll",
+          () => {
+            const deltaY = window.scrollY - lastScrollY;
+            lastScrollY = window.scrollY;
+            const pJS = window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS;
+            if (pJS && pJS.particles && pJS.particles.array) {
+              pJS.particles.array.forEach((p) => (p.y += deltaY * 0.1));
             }
-          }
-        });
+          },
+          { passive: true }
+        );
       });
     </script>
   </body>
